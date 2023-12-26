@@ -1,6 +1,7 @@
-import { CommentSection } from '../comment-section/CommentSection';
+import { CommentSection } from './comment-section/CommentSection';
 import { profilePicture } from '../sidebar/Sidebar';
 import styles from './PostCard.module.css';
+import { CommentList } from './comment-list/CommentList';
 
 export function PostCard() {
     return (
@@ -48,6 +49,10 @@ export function PostCard() {
             </div>
 
             <CommentSection />
+
+            <div className={styles.commentList}>
+                <CommentList />
+            </div>
         </article>
     )
 }
