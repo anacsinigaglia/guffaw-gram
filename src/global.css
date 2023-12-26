@@ -10,8 +10,15 @@
 
     --purple-400: #C183FA;
 
-    --green-300: #9FD964;
+    --red-500: #f75a6b;
+
+    --green-300: #8fc559;
     --green-400: #5E8852;
+}
+
+:focus {
+    outline: transparent;
+    box-shadow: 0 0 0 2px var(--purple-400);
 }
 
 * {
