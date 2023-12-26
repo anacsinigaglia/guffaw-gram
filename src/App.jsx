@@ -1,8 +1,8 @@
 import { Header } from './components/header/Header';
 import './global.css';
 import styles from './App.module.css';
-import { Sidebar } from './components/sidebar/Sidebar';
 import { PostCard } from './components/post-card/PostCard';
+import { Sidebar } from './components/sidebar/Sidebar';
 
 export function App() {
 

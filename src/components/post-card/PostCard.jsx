@@ -1,3 +1,4 @@
+import { CommentSection } from '../comment-section/CommentSection';
 import { profilePicture } from '../sidebar/Sidebar';
 import styles from './PostCard.module.css';
 
@@ -45,6 +46,8 @@ export function PostCard() {
                 <a href=''>#history</a>{' '}
                 <a href=''>#loremipsum</a>
             </div>
+
+            <CommentSection />
         </article>
     )
 }
