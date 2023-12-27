@@ -39,17 +39,17 @@ export function PostCard({ author, publishedAt, content }) {
         </time>
       </header>
       <div className={styles.content}>
-        {content.map(({ type, text }, idx) => {
+        {content.map(({ type, text }) => {
           if (type === "paragraph") {
             return (
               <>
-                <p key={idx}>{text}</p>
+                <p key={text}>{text}</p>
                 <br />
               </>
             );
           } else {
             return (
-              <a href="" key={idx}>
+              <a href="" key={text}>
                 {" "}
                 {text}
               </a>
@@ -63,8 +63,8 @@ export function PostCard({ author, publishedAt, content }) {
         newCommentText={newCommentText}
         setNewCommentText={setNewCommentText}
       />
-      {comments.map((comment, idx) => (
-        <div className={styles.commentList} key={idx}>
+      {comments.map((comment) => (
+        <div className={styles.commentList} key={comment}>
           <CommentCard comment={comment} />
         </div>
       ))}
