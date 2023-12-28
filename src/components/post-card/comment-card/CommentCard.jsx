@@ -2,7 +2,9 @@ import { ThumbsUp, Trash } from "phosphor-react";
 import styles from "./CommentCard.module.css";
 import { profilePicture } from "../../sidebar/Sidebar";
 
-export function CommentCard({ comment }) {
+export function CommentCard({ comment, onDeleteComment }) {
+  const handleDeleteComment = () => onDeleteComment(comment);
+
   return (
     <div className={styles.comment}>
       <img src={profilePicture} />
@@ -17,7 +19,7 @@ export function CommentCard({ comment }) {
               </time>
             </div>
 
-            <button title="Deletar comentário">
+            <button title="Deletar comentário" onClick={handleDeleteComment}>
               <Trash size={24} />
             </button>
           </header>

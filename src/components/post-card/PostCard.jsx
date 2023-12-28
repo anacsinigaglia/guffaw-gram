@@ -19,6 +19,11 @@ export function PostCard({ author, publishedAt, content }) {
     addSuffix: true,
   });
 
+  const deleteComment = (commentToDelete) => {
+    const updatedComments = comments.filter((c) => c !== commentToDelete);
+    setComments(updatedComments);
+  };
+
   return (
     <article className={styles.post}>
       <header>
@@ -65,7 +70,7 @@ export function PostCard({ author, publishedAt, content }) {
       />
       {comments.map((comment) => (
         <div className={styles.commentList} key={comment}>
-          <CommentCard comment={comment} />
+          <CommentCard comment={comment} onDeleteComment={deleteComment} />
         </div>
       ))}
     </article>
