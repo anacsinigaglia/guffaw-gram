@@ -1,9 +1,14 @@
 import { ThumbsUp, Trash } from "phosphor-react";
 import styles from "./CommentCard.module.css";
 import { profilePicture } from "../../sidebar/Sidebar";
+import { useState } from "react";
 
 export function CommentCard({ comment, onDeleteComment }) {
+  const [likeCount, setLikeCount] = useState(0);
+
   const handleDeleteComment = () => onDeleteComment(comment);
+
+  const handleLikeComment = () => setLikeCount(likeCount + 1);
 
   return (
     <div className={styles.comment}>
@@ -27,9 +32,9 @@ export function CommentCard({ comment, onDeleteComment }) {
         </div>
 
         <footer>
-          <button>
+          <button onClick={handleLikeComment}>
             <ThumbsUp size={20} />
-            Aplaudir <span>28</span>
+            Aplaudir <span>{likeCount}</span>
           </button>
         </footer>
       </div>
