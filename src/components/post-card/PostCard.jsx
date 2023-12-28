@@ -1,58 +1,78 @@
-import { CommentSection } from './comment-section/CommentSection';
-import { profilePicture } from '../sidebar/Sidebar';
-import styles from './PostCard.module.css';
-import { CommentList } from './comment-list/CommentList';
+import { CommentForm } from "./comment-form/CommentForm";
+import { CommentCard } from "./comment-card/CommentCard";
+import { format, formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
+import styles from "./PostCard.module.css";
+import { useState } from "react";
 
-export function PostCard() {
-    return (
-        <article className={styles.post}>
-            <header>
-                <div className={styles.author}>
-                    <img src={profilePicture} />
+export function PostCard({ author, publishedAt, content }) {
+  const [comments, setComments] = useState([1, 2]);
+  const [newCommentText, setNewCommentText] = useState("");
 
-                    <div className={styles.authorInfo}>
-                        <strong>Anokia Sinigaglia</strong>
-                        <span>Web Developer</span>
-                    </div>
-                </div>
+  const formattedPublishedDate = format(
+    publishedAt,
+    "d 'de' LLLL 'às' HH:mm'h'",
+    { locale: ptBR }
+  );
+  const formattedPublishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true,
+  });
 
-                 <time 
-                    title="26 de Dezembro às 13:39"
-                    dateTime='2022-12-26'
-                >
-                    Publicado há 1h
-                </time>
-            </header>
+  const deleteComment = (commentToDelete) => {
+    const updatedComments = comments.filter((c) => c !== commentToDelete);
+    setComments(updatedComments);
+  };
 
-            <div className={styles.content}>
-                <p>
-                    Contrary to popular belief, Lorem Ipsum is not 
-                    simply random text. It has roots in a piece of 
-                    classical Latin literature from 45 BC, making it
-                    over 2000 years old. Richard McClintock, a Latin
-                    professor at Hampden-Sydney College in Virginia, 
-                    looked up one of the more obscure Latin words, 
-                    consectetur, from a Lorem Ipsum passage, and 
-                    going through the cites of the word in classical 
-                    literature, discovered the undoubtable source. 
-                    Lorem Ipsum comes from sections 1.10.32 and 1.10.33
-                     of &quot;de Finibus Bonorum et Malorum&quot; 
-                     (The Extremes of Good and Evil) by Cicero, written 
-                     in 45 BC. This book is a treatise on the theory of 
-                     ethics, very popular during the Renaissance. The 
-                     first line of Lorem Ipsum, &quot;Lorem ipsum dolor 
-                     sit amet..&quot;, comes from a line in section 1.10.32.
-                </p>
+  return (
+    <article className={styles.post}>
+      <header>
+        <div className={styles.author}>
+          <img src={author.avatarUrl} />
+
+          <div className={styles.authorInfo}>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
+          </div>
+        </div>
+
+        <time
+          title={formattedPublishedDate}
+          dateTime={publishedAt.toISOString()}
+        >
+          {formattedPublishedDateRelativeToNow}
+        </time>
+      </header>
+      <div className={styles.content}>
+        {content.map(({ type, text }) => {
+          if (type === "paragraph") {
+            return (
+              <>
+                <p key={text}>{text}</p>
                 <br />
-                <a href=''>#history</a>{' '}
-                <a href=''>#loremipsum</a>
-            </div>
+              </>
+            );
+          } else {
+            return (
+              <a href="" key={text}>
+                {" "}
+                {text}
+              </a>
+            );
+          }
+        })}
+      </div>
 
-            <CommentSection />
-
-            <div className={styles.commentList}>
-                <CommentList />
-            </div>
-        </article>
-    )
+      <CommentForm
+        setComments={setComments}
+        newCommentText={newCommentText}
+        setNewCommentText={setNewCommentText}
+      />
+      {comments.map((comment) => (
+        <div className={styles.commentList} key={comment}>
+          <CommentCard comment={comment} onDeleteComment={deleteComment} />
+        </div>
+      ))}
+    </article>
+  );
 }
